@@ -22,13 +22,14 @@ class ToDoList extends Component {
 
     deleteTodo(id) {
         this.setState(st => ({
-            todos: st.todo.filter(todo => todo.id !== id)
+            todos: st.todos.filter(todo => todo.id !== id)
         }));
     }
 
     renderTodos() {
         const todos = this.state.todos.map(todo => (
-            <Todo key={todo.id} currTask={todo.task} />
+            <Todo key={todo.id} currTask={todo.task} 
+                    triggerDelete={() => this.deleteTodo(todo.id)}/>
         ));
         return (
             <ul>
