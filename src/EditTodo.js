@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import './NewTodoForm.css';
+import './editTodo.css';
 
-class NewTodoForm extends Component {
-
+class EditTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             task: ''
+
         }
-        this.handleChange=this.handleChange.bind(this);
-        this.handleSubmit=this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    // Takes in form data and sends it to parent function.
     handleSubmit(evt) {
         evt.preventDefault();
         this.props.handleTodo(this.state);
-        this.setState({
-            task: ''
-        })
+        this.setState({ [evt.target.editable]:  })
     }
 
     handleChange(evt) {
@@ -28,13 +25,14 @@ class NewTodoForm extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <label htmlFor="task">Add To Do:</label>
-                <input name="task" id="task" value={this.state.task}
+                <label htmlFor="editTask">Edit me!</label>
+                <input name="editTask" id="editTask"
+                    value={this.state.task}
                     onChange={this.handleChange} />
-                <button>Add Todo!</button>
+                <button>Submit changes</button>
             </form>
         )
     }
 }
 
-export default NewTodoForm;
+export default EditTodo;

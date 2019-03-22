@@ -12,11 +12,19 @@ class Todo extends Component {
         this.props.triggerDelete();
     }
 
+    handleEdit(evt) {
+        // Call up to Todolist to render edit form.
+        this.props.triggerEdit();
+    }
+
     render() {
         return (
             <li key={this.props.id}>
-                <div>{this.props.currTask}</div>
-                <button onClick={this.handleClick}>X</button>
+                <div>
+                    <div>{this.props.currTask}</div>
+                    <button onClick={this.handleClick}>X</button>
+                    <button onClick={this.handleEdit}>Edit</button>
+                </div>
             </li>
         )
     }
