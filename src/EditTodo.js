@@ -33,7 +33,7 @@ class EditTodo extends Component {
                 <div>
                     <div>{this.props.currTask}</div>
                     <button onClick={this.handleClickX}>X</button>
-                    <form onSubmit={this.handClick}>
+                    <form onSubmit={this.handleClick}>
                         <label htmlFor="task">Edit:</label>
                         <input name="task" id="task"
                             placeholder={this.props.prefil}
