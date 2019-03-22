@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ToDoList.css';
 import uuid from 'uuid/v4';
 import Todo from './Todo';
+import EditTodo from './EditTodo';
 import NewTodoForm from './NewTodoForm';
 
 class ToDoList extends Component {
@@ -11,6 +12,7 @@ class ToDoList extends Component {
             todos: [],
         }
         this.addTodo = this.addTodo.bind(this);
+        this.updateEditable = this.updateEditable.bind(this);
     }
 
     addTodo(todo) {
@@ -27,26 +29,53 @@ class ToDoList extends Component {
         }));
     }
 
-    // Displays list of existing todos.
-    renderTodos() {
-        //Take care of mapping here to keep return html clean.
-        const todos = this.state.todos.map(todo => (
-            <Todo key={todo.id} currTask={todo.task} 
-                    triggerDelete={() => this.deleteTodo(todo.id)}
-                    triggerEdit={() => this.editTodo(todo.id)} />
-        ));
-        return (
-            <ul>
-                {todos}
-            </ul>
-        );
+    // Edit a todo from state by id
+    editTodo(id, updated) {
+        const updatedTodos = this.state.todos.map( todo => {
+            if (todo.id === id) {
+                return {...todo, task: updated, editable: false };
+            }
+            return todo;
+        })
+        this.setState({ todos: updatedTodos })
+        // this.setState(st => ({
+        //     todos: st.todos.map(function(todo){
+        //         if (todo.id === updatedTodo.id) {
+        //             todo['task'] = updatedTodo.task;
+        //             return todo;
+        //         }
+        //     })
+        // }));
+    }
+
+    updateEditable(id) {
+        const updatedTodos = this.state.todos.map( todo => {
+            if (todo.id === id) {
+                return { ...todo, editable: true };
+            }
+            return todo;
+        })
+        this.setState({ todos: updatedTodos });
     }
 
     render () {
         return (
             <div className='ToDoList'>
                 <NewTodoForm handleTodo={this.addTodo} />
-                {this.renderTodos()}
+                <ul>
+                {this.state.todos.map(t => {
+                    if(t.editable) {
+                       return  <EditTodo key={t.id} currTask={t.task} prefil={t.task}
+                            triggerDelete={() => this.deleteTodo(t.id)}
+                            triggerEdit={updated => this.editTodo(t.id, updated)} />
+                    }
+                    else {
+                        return <Todo key={t.id} currTask={t.task} 
+                            triggerDelete={() => this.deleteTodo(t.id)} 
+                            triggerUpdate={() => this.updateEditable(t.id)} />
+                    }
+                })}
+            </ul>
             </div>
         )
     }

@@ -5,6 +5,7 @@ class Todo extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
     }
 
     handleClick(evt) {
@@ -12,9 +13,9 @@ class Todo extends Component {
         this.props.triggerDelete();
     }
 
-    handleEdit(evt) {
-        // Call up to Todolist to render edit form.
-        this.props.triggerEdit();
+    handleUpdate(evt) {
+        //update the editable state to true on click
+        this.props.triggerUpdate();
     }
 
     render() {
@@ -23,7 +24,7 @@ class Todo extends Component {
                 <div>
                     <div>{this.props.currTask}</div>
                     <button onClick={this.handleClick}>X</button>
-                    <button onClick={this.handleEdit}>Edit</button>
+                    <button onClick={this.handleUpdate}>Edit</button>
                 </div>
             </li>
         )

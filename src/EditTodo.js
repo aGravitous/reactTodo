@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
-import './editTodo.css';
+import './EditTodo.css';
 
 class EditTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: ''
-
+            task: '',
         }
-        this.handleSubmit = this.handleClick.bind(this);
+        this.handleClickX = this.handleClickX.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(evt) {
+    handleClickX(evt) {
+        //call up to the TodoList to delete the current Todo
+        this.props.triggerDelete();
+    }
+
+    handleClick(evt) {
         evt.preventDefault();
-        this.props.handleTodo(this.state);
-        this.setState({ [evt.target.editable]:  })
+        console.log(this.state)
+        this.props.triggerEdit(this.state.task);
     }
 
     handleChange(evt) {
@@ -24,13 +29,19 @@ class EditTodo extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <label htmlFor="editTask">Edit me!</label>
-                <input name="editTask" id="editTask"
-                    value={this.state.task}
-                    onChange={this.handleChange} />
-                <button>Submit changes</button>
-            </form>
+            <li key={this.props.id}>
+                <div>
+                    <div>{this.props.currTask}</div>
+                    <button onClick={this.handleClickX}>X</button>
+                    <form onSubmit={this.handClick}>
+                        <label htmlFor="task">Edit:</label>
+                        <input name="task" id="task"
+                            placeholder={this.props.prefil}
+                            onChange={this.handleChange} />
+                        <button>Submit changes</button>
+                    </form>
+                </div>
+            </li>
         )
     }
 }
