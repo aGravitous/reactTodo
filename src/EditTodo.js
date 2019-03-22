@@ -5,7 +5,7 @@ class EditTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: '',
+            task: [this.props.prefil],
         }
         this.handleClickX = this.handleClickX.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -36,7 +36,7 @@ class EditTodo extends Component {
                     <form onSubmit={this.handleClick}>
                         <label htmlFor="task">Edit:</label>
                         <input name="task" id="task"
-                            placeholder={this.props.prefil}
+                            value={this.state.task}
                             onChange={this.handleChange} />
                         <button>Submit changes</button>
                     </form>
